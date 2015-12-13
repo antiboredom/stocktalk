@@ -1,0 +1,128 @@
+<html>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <style>
+    body,
+    input {
+      font: 18px Arial, sans-serif;
+      /* text-align: center; */
+    }
+    input.text {
+      display: block;
+      float: left;
+      width: 75%;
+    }
+    input {
+      padding: 5px;
+    }
+    span.word {
+      cursor: pointer;
+      color: #999;
+      padding: 5px;
+    }
+    input.word {
+      display: none;
+    }
+    .word {
+      display: block;
+      float: right;
+      width: 20%;
+    }
+    div.line {
+      margin: 10px 0px;
+      overflow: auto;
+    }
+    #wrap {
+      max-width: 600px;
+      margin: auto;
+    }
+    #status {
+      display: none;
+    }
+    #vid-wrapper {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+
+  <form action="create" method="post">
+    <h1>Stock Talk</h1>
+    <p>Write three lines and create a <em>personalized</em> video message.</p>
+    <div class="line">
+      <input name="text[]" class="text" placeholder="First Line">
+      <span class="word"></span>
+      <input name="word[]" class="word">
+    </div>
+
+    <div class="line">
+      <input name="text[]" class="text" placeholder="Second Line">
+      <span class="word"></span>
+      <input name="word[]" class="word">
+    </div>
+
+    <div class="line">
+      <input name="text[]" class="text" placeholder="Third Line">
+      <input name="word[]" class="word">
+      <span class="word"></span>
+    </div>
+
+    <input id="submit" type="submit" value="Create Video">
+    <div id="status">Generating...</div>
+
+  </form>
+
+  <div id="vid-wrapper">
+    <video controls src="" width="596" height="336"></video>
+    <a id="vid-link" href="">Download</a>
+  </div>
+  </div>
+
+  <script>
+    $('form').on('submit', function(e) {
+      $('#submit').attr('disabled', true).hide();;
+      $('#vid-wrapper').hide();
+      $('#status').show();
+      e.preventDefault();
+      var params = $(this).serialize();
+      $.post('/create', params, function(data) {
+        $('video').attr('src', data);
+        $('#vid-link').attr('href', data);
+        $('#submit').attr('disabled', false).show();
+        $('#status').hide();
+        $('#vid-wrapper').show();
+        // console.log(data);
+      });
+    });
+
+    $('.text').on('change', function(e) {
+      var inp = $(this).parent().find('input.word');
+      var span = $(this).parent().find('span.word');
+      var params = {
+        text: $(this).val()
+      };
+      $.get('/keyword', params, function(data) {
+        inp.val(data.keywords[0]);
+        span.text(data.keywords[0]);
+      });
+    });
+
+    $('span.word').on('click', function(e) {
+      $(this).hide();
+      $(this).parent().find('input.word').show();
+    });
+
+    $('input.word').on('keypress', function(e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        $(this).hide();
+        $(this).parent().find('span.word').text($(this).val()).show();
+      }
+    });
+  </script>
+</body>
+
+</html>
