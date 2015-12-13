@@ -50,7 +50,7 @@ def get_shutterstock_vids(q, total=1):
     return downloads
 
 
-def create_sub(text, size, fntname='/Library/Fonts/Arial Bold.ttf', padding=0.02, bg=(0, 0, 0, 230), fg=(255, 255, 255), rect_offset=None, min_height=85):
+def create_sub(text, size, fntname='arial.ttf', padding=0.02, bg=(0, 0, 0, 230), fg=(255, 255, 255), rect_offset=None, min_height=85):
 
     padding = size[0] * padding
 
