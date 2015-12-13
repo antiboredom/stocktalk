@@ -120,7 +120,7 @@ def save_out(tracks, outfile=None, filetype='mp4'):
         outfile = 'ad_' + str(int(time.time())) + '.mp4'
     if filetype == 'gif':
         outfile = outfile.replace('.mp4', '.gif')
-        final_clip.write_gif(outfile, fps=5, loop=1)
+        final_clip.speedx(1.7).write_gif(outfile, fps=10, loop=1)
     else:
         final_clip.write_videofile(outfile, fps=24, codec='libx264')
     return outfile
