@@ -21,7 +21,10 @@ def create():
         return ''
     outfile = 'static/vids/msg_' + str(int(time.time())) + '.mp4'
     composition = stocktalk.compose(parts)
-    final = stocktalk.save_out(composition, outfile=outfile, filetype='mp4')
+    filetype = 'gif'
+    if request.form.get('filetype') == 'mp4':
+        filetype = 'mp4'
+    final = stocktalk.save_out(composition, outfile=outfile, filetype=filetype)
     # return redirect(outfile)
     return final
 
@@ -29,7 +32,8 @@ def create():
 @app.route('/keyword', methods=['GET'])
 def keyword():
     phrase = request.args.get('text', '')
-    words = [w for w, pos in tag(phrase) if pos in ['VBD', 'VBN', 'JJ', 'NN', 'NNS', 'NNP', 'NP']]
+    words = [w for w, pos in tag(phrase) if pos in ['VB', 'VBD', 'VBN', 'JJ', 'NN', 'NNS', 'NNP', 'NP']]
+    print tag(phrase)
     words = [w for w in words if len(w) > 2]
     return jsonify({'keywords': words})
 
