@@ -22,7 +22,7 @@
       padding: 5px;
     }
     input.word {
-      display: none;
+      /* display: none; */
     }
     .word {
       display: block;
@@ -53,21 +53,21 @@
     <h1>Stock Talk</h1>
     <p>Write three lines and create a <em>personalized</em> video message.</p>
     <div class="line">
-      <input name="text[]" class="text" placeholder="First Line">
-      <span class="word"></span>
-      <input name="word[]" class="word">
+      <input name="text[]" class="text" placeholder="First Line" tabindex="1">
+      <!-- <span class="word"></span> -->
+      <input name="word[]" class="word" placeholder="Key word">
     </div>
 
     <div class="line">
-      <input name="text[]" class="text" placeholder="Second Line">
-      <span class="word"></span>
-      <input name="word[]" class="word">
+      <input name="text[]" class="text" placeholder="Second Line" tabindex="2">
+      <!-- <span class="word"></span> -->
+      <input name="word[]" class="word" placeholder="Key word">
     </div>
 
     <div class="line">
-      <input name="text[]" class="text" placeholder="Third Line">
-      <input name="word[]" class="word">
-      <span class="word"></span>
+      <input name="text[]" class="text" placeholder="Third Line" tabindex="3">
+      <input name="word[]" class="word" placeholder="Key word">
+      <!-- <span class="word"></span> -->
     </div>
 
     <input id="submit" type="submit" value="Create Video">
@@ -77,6 +77,7 @@
 
   <div id="vid-wrapper">
     <video controls src="" width="596" height="336"></video>
+    <img src="" id="out-img">
     <a id="vid-link" href="">Download</a>
   </div>
   </div>
@@ -89,7 +90,13 @@
       e.preventDefault();
       var params = $(this).serialize();
       $.post('/create', params, function(data) {
-        $('video').attr('src', data);
+        if (data.indexOf('.gif') > -1) {
+          $('#out-img').attr('src', data).show();
+          $('video').hide();
+        } else {
+          $('video').attr('src', data).show();
+          $('#out-img').hide();
+        }
         $('#vid-link').attr('href', data);
         $('#submit').attr('disabled', false).show();
         $('#status').hide();
@@ -110,18 +117,18 @@
       });
     });
 
-    $('span.word').on('click', function(e) {
-      $(this).hide();
-      $(this).parent().find('input.word').show();
-    });
-
-    $('input.word').on('keypress', function(e) {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        $(this).hide();
-        $(this).parent().find('span.word').text($(this).val()).show();
-      }
-    });
+    // $('span.word').on('click', function(e) {
+    //   $(this).hide();
+    //   $(this).parent().find('input.word').show();
+    // });
+    //
+    // $('input.word').on('keypress', function(e) {
+    //   if (e.keyCode === 13) {
+    //     e.preventDefault();
+    //     $(this).hide();
+    //     $(this).parent().find('span.word').text($(this).val()).show();
+    //   }
+    // });
   </script>
 </body>
 

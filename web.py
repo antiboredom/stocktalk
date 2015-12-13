@@ -1,9 +1,10 @@
 import time
 import stocktalk
+import os
 from flask import Flask, render_template, request, redirect, jsonify
 from pattern.en import tag
 app = Flask(__name__)
-# app.debug = True
+app.debug = True
 
 @app.route('/')
 def home():
@@ -16,9 +17,11 @@ def create():
     texts = request.form.getlist('text[]')
     parts = zip(words, texts)
     parts = [{'query': p[0], 'text': p[1]} for p in parts if p[0] != '' and p[1] != '']
+    if len(parts) == 0:
+        return ''
     outfile = 'static/vids/msg_' + str(int(time.time())) + '.mp4'
     composition = stocktalk.compose(parts)
-    final = stocktalk.save_out(composition, outfile=outfile)
+    final = stocktalk.save_out(composition, outfile=outfile, filetype='mp4')
     # return redirect(outfile)
     return final
 
@@ -37,4 +40,4 @@ def keyword():
 #     phrases = 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)))

@@ -95,7 +95,7 @@ def create_sub(text, size, fntname='arial.ttf', padding=0.02, bg=(0, 0, 0, 230),
     return clip
 
 
-def save_out(tracks, outfile=None):
+def save_out(tracks, outfile=None, filetype='mp4'):
 
     out = []
 
@@ -118,7 +118,11 @@ def save_out(tracks, outfile=None):
     final_clip = CompositeVideoClip(out)
     if outfile is None:
         outfile = 'ad_' + str(int(time.time())) + '.mp4'
-    final_clip.write_videofile(outfile, fps=24)
+    if filetype == 'gif':
+        outfile = outfile.replace('.mp4', '.gif')
+        final_clip.write_gif(outfile, fps=5, loop=1)
+    else:
+        final_clip.write_videofile(outfile, fps=24, codec='libx264')
     return outfile
 
 
