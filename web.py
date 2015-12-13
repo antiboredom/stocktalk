@@ -4,7 +4,7 @@ import os
 from flask import Flask, render_template, request, redirect, jsonify
 from pattern.en import tag
 app = Flask(__name__)
-app.debug = True
+# app.debug = True
 
 @app.route('/')
 def home():
@@ -19,6 +19,7 @@ def create():
     parts = [{'query': p[0], 'text': p[1]} for p in parts if p[0] != '' and p[1] != '']
     if len(parts) == 0:
         return ''
+    parts = parts[0:3]
     outfile = 'static/vids/msg_' + str(int(time.time())) + '.mp4'
     composition = stocktalk.compose(parts)
     filetype = 'gif'

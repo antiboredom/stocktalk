@@ -123,17 +123,21 @@
       });
     });
 
-    $('.text').on('keyup', $.debounce( 250, function() {
+    $('.text').on('keyup', $.debounce(250, getKeyword));
+    $('.text').on('change', getKeyword);
+    $('.word').on('click', function(e){
+      $(this).select()
+    });
+
+    function getKeyword() {
       var inp = $(this).parent().find('input.word');
-      var span = $(this).parent().find('span.word');
       var params = {
         text: $(this).val()
       };
       $.get('/keyword', params, function(data) {
         inp.val(data.keywords[0]);
-        span.text(data.keywords[0]);
       });
-    }));
+    }
 
     // $('span.word').on('click', function(e) {
     //   $(this).hide();
