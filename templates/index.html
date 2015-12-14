@@ -3,37 +3,38 @@
 <head>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <title>Genuine Human Interaction</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="static/js/jquery.ba-throttle-debounce.min.js"></script>
   <style>
     body {
       margin: 20px;
     }
     body,
-    input {
-      font: 18px Arial, sans-serif;
-      /* text-align: center; */
+    input,
+    select {
+      font: 13px 'Helvetica Neue', sans-serif;
     }
     input.text {
       display: block;
       float: left;
       width: 75%;
     }
-    input {
-      padding: 5px;
+    input,
+    select {
+      border: 1px solid #ccc;
+      padding: 3px;
+      background-color: #eee;
     }
-    span.word {
-      cursor: pointer;
-      color: #999;
-      padding: 5px;
+    input[type="submit"] {
+      padding: 3px 7px;
     }
     input.word {
-      /* display: none; */
-    }
-    .word {
       display: block;
       float: right;
-      width: 20%;
+      width: 22%;
+      background-color: #fff;
+      border: none;
+    }
+    select {
+      margin-right: 10px;
     }
     div.line {
       margin: 10px 0px;
@@ -44,12 +45,10 @@
       margin: auto;
     }
     #status {
-      display: none;
+      width: 100%;
     }
-    #vid-wrapper {
-      display: none;
-    }
-    video, #out-img {
+    video,
+    #out-img {
       width: 100%;
     }
   </style>
@@ -57,101 +56,13 @@
 
 <body>
   <div id="wrap">
-
-  <form action="create" method="post">
     <h1>Genuine Human Interaction</h1>
     <p>Write three lines to create a personalized video message.</p>
-    <div class="line">
-      <input name="text[]" class="text" placeholder="First Line" tabindex="1" autocomplete="off">
-      <!-- <span class="word"></span> -->
-      <input name="word[]" class="word" placeholder="Key word" autocomplete="off">
-    </div>
 
-    <div class="line">
-      <input name="text[]" class="text" placeholder="Second Line" tabindex="2" autocomplete="off">
-      <!-- <span class="word"></span> -->
-      <input name="word[]" class="word" placeholder="Key word" autocomplete="off">
-    </div>
-
-    <div class="line">
-      <input name="text[]" class="text" placeholder="Third Line" tabindex="3" autocomplete="off">
-      <input name="word[]" class="word" placeholder="Key word" autocomplete="off">
-      <!-- <span class="word"></span> -->
-    </div>
-    
-    <div id="submit-wrap">
-      <select id="filetype" name="filetype">
-        <option value="gif">GIF</option> 
-        <option value="mp4">VIDEO</option> 
-      </select>
-      <input id="submit" type="submit" value="Create">
-    </div>
-
-    <div id="status">Generating...</div>
-
-  </form>
-
-  <div id="vid-wrapper">
-    <video controls src=""></video>
-    <img src="" id="out-img">
-    <a id="vid-link" href="">Download</a>
-  </div>
+    <div id="container"></div>
   </div>
 
-  <script>
-    $('form').on('submit', function(e) {
-      $('#submit').attr('disabled', true)
-      $('#submit-wrap').hide();;
-      $('#vid-wrapper').hide();
-      $('#status').show();
-      e.preventDefault();
-      var params = $(this).serialize();
-      $.post('/create', params, function(data) {
-        if (data.indexOf('.gif') > -1) {
-          $('#out-img').attr('src', data).show();
-          $('video').hide();
-        } else if (data.indexOf('.mp4') > -1){
-          $('video').attr('src', data).show();
-          $('#out-img').hide();
-        }
-        $('#vid-link').attr('href', data);
-        $('#submit').attr('disabled', false).show();
-        $('#submit-wrap').show();;
-        $('#status').hide();
-        $('#vid-wrapper').show();
-        // console.log(data);
-      });
-    });
-
-    $('.text').on('keyup', $.debounce(250, getKeyword));
-    $('.text').on('change', getKeyword);
-    $('.word').on('click', function(e){
-      $(this).select()
-    });
-
-    function getKeyword() {
-      var inp = $(this).parent().find('input.word');
-      var params = {
-        text: $(this).val()
-      };
-      $.get('/keyword', params, function(data) {
-        inp.val(data.keywords[0]);
-      });
-    }
-
-    // $('span.word').on('click', function(e) {
-    //   $(this).hide();
-    //   $(this).parent().find('input.word').show();
-    // });
-    //
-    // $('input.word').on('keypress', function(e) {
-    //   if (e.keyCode === 13) {
-    //     e.preventDefault();
-    //     $(this).hide();
-    //     $(this).parent().find('span.word').text($(this).val()).show();
-    //   }
-    // });
-  </script>
+  <script src="static/js/bundle.js"></script>
 </body>
 
 </html>

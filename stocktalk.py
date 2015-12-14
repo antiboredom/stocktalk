@@ -57,7 +57,7 @@ def create_sub(text, size, fntname='arial.ttf', padding=0.02, bg=(0, 0, 0, 230),
     img = Image.new('RGBA', size, (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
 
-    fontsize = 200
+    fontsize = 100
     fnt = ImageFont.truetype(fntname, fontsize)
     textsize = fnt.getsize(text)
 
@@ -117,7 +117,7 @@ def save_out(tracks, outfile=None, filetype='mp4'):
 
     final_clip = CompositeVideoClip(out)
     if outfile is None:
-        outfile = 'ad_' + str(int(time.time())) + '.mp4'
+        outfile = 'msg_' + str(int(time.time())) + '.mp4'
     if filetype == 'gif':
         outfile = outfile.replace('.mp4', '.gif')
         final_clip.speedx(1.7).write_gif(outfile, fps=10, loop=1)
@@ -133,7 +133,7 @@ def compose(parts):
     for p in parts:
         vid = get_shutterstock_vids(p['query'])
 
-        duration = random.uniform(4, 5)
+        duration = random.uniform(3, 4)
         # text = 'You ' + p['verb'] + ' ' + p['text']
         text = p['text']
         text = text.upper()

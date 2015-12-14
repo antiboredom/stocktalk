@@ -4,7 +4,7 @@ import os
 from flask import Flask, render_template, request, redirect, jsonify
 from pattern.en import tag
 app = Flask(__name__)
-# app.debug = True
+app.debug = True
 
 @app.route('/')
 def home():
@@ -18,7 +18,7 @@ def create():
     parts = zip(words, texts)
     parts = [{'query': p[0], 'text': p[1]} for p in parts if p[0] != '' and p[1] != '']
     if len(parts) == 0:
-        return ''
+        return jsonify({'url': None})
     parts = parts[0:3]
     outfile = 'static/vids/msg_' + str(int(time.time())) + '.mp4'
     composition = stocktalk.compose(parts)
@@ -26,8 +26,7 @@ def create():
     if request.form.get('filetype') == 'mp4':
         filetype = 'mp4'
     final = stocktalk.save_out(composition, outfile=outfile, filetype=filetype)
-    # return redirect(outfile)
-    return final
+    return jsonify({'url': final})
 
 
 @app.route('/keyword', methods=['GET'])
