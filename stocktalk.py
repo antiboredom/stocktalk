@@ -120,7 +120,7 @@ def save_out(tracks, outfile=None, filetype='mp4'):
         outfile = 'msg_' + str(int(time.time())) + '.mp4'
     if filetype == 'gif':
         outfile = outfile.replace('.mp4', '.gif')
-        final_clip.speedx(1.7).write_gif(outfile, fps=10, loop=1)
+        final_clip.speedx(1.7).write_gif(outfile, fps=3, loop=1)
     else:
         final_clip.write_videofile(outfile, fps=24, codec='libx264')
     return outfile
@@ -133,7 +133,7 @@ def compose(parts):
     for p in parts:
         vid = get_shutterstock_vids(p['query'])
 
-        duration = random.uniform(3, 4)
+        duration = random.uniform(4, 5)
         # text = 'You ' + p['verb'] + ' ' + p['text']
         text = p['text']
         text = text.upper()

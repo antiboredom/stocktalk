@@ -3,6 +3,15 @@ import stocktalk
 import os
 from flask import Flask, render_template, request, redirect, jsonify
 from pattern.en import tag
+import tinys3
+import json
+
+with open('credentials.json', 'r') as f:
+    creds = json.load(f)
+
+S3_SECRET_KEY = creds['S3_SECRET_KEY']
+S3_ACCESS_KEY = creds['S3_ACCESS_KEY']
+
 app = Flask(__name__)
 app.debug = True
 
@@ -26,7 +35,15 @@ def create():
     if request.form.get('filetype') == 'mp4':
         filetype = 'mp4'
     final = stocktalk.save_out(composition, outfile=outfile, filetype=filetype)
-    return jsonify({'url': final})
+
+    conn = tinys3.Connection(S3_ACCESS_KEY,S3_SECRET_KEY)
+    f = open(final, 'rb')
+    conn.upload(final.split('/')[-1], f, 'authenticcommunication')
+    f.close()
+
+    os.remove(final)
+
+    return jsonify({'url': 'http://authenticcommunication.s3.amazonaws.com/' + final.split('/')[-1]})
 
 
 @app.route('/keyword', methods=['GET'])

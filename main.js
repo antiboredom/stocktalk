@@ -123,7 +123,7 @@ var Output = React.createClass({
     if (this.props.src.indexOf('.gif') > -1) {
     	el = <img id="out-img" src={this.props.src} />;
     } else {
-    	el = <video autoplay="1" controls="controls" src={this.props.src}></video>;
+    	el = <video loop="1" controls="controls" src={this.props.src}></video>;
     }
 
     return (
