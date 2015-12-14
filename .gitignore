@@ -1,5 +1,6 @@
-*.mp4
-*.png
 *.pyc
-*.gif
+images/
+static/vids/
+footage/
 env/
+node_modules/
