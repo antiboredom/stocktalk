@@ -130,7 +130,7 @@ var Output = React.createClass({
     return (
       <div>
         {el}
-        <a href={this.props.src}>Download</a>
+        <a href={this.props.src} download>Download</a>
       </div>
     );
   }
