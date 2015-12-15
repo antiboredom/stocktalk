@@ -16,6 +16,7 @@ var Stock = React.createClass({
 
 	handleSubmit: function(e) {
   	e.preventDefault();
+    document.querySelector('#welcome').style.display = 'none';
     var img = 'static/images/hold' + Math.ceil(Math.random()*2) + '.gif';
     this.setState({status: img});
     this.createVideo();
