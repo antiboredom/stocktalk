@@ -32,7 +32,7 @@ gulp.task('watch', function() {
   return watcher.on('update', function () {
     watcher.bundle()
       .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC))
+      .pipe(gulp.dest(path.DEST_SRC));
       console.log('Updated');
   })
     .bundle()
@@ -41,6 +41,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', function(){
+  process.env.NODE_ENV='production';
   browserify({
     entries: [path.ENTRY_POINT],
     transform: [reactify],
@@ -50,6 +51,7 @@ gulp.task('build', function(){
     .pipe(streamify(uglify(path.MINIFIED_OUT)))
     .pipe(gulp.dest(path.DEST_BUILD));
 });
+
 
 gulp.task('production', ['build']);
 
