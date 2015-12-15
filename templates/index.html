@@ -86,6 +86,10 @@
     h1 {
       margin: 0;
     }
+
+    #out-vid, #out-img {
+      margin-bottom: 10px;
+    }
     @media screen and (max-device-width: 700px) {
       #wrap {
         padding: 0;
@@ -100,7 +104,7 @@
 
 <body>
   <div id="welcome">
-    <video src="static/images/welcome.mp4" autoplay="1" loop="1"></video>
+    <video src="static/images/welcome.mp4" muted="true" autoplay="1" loop="1"></video>
   </div>
 
   <div style="display:none">
@@ -118,7 +122,13 @@
 
   <script>
     var i = Math.ceil(Math.random()*5);
-    document.querySelector('#welcome video').src = 'static/images/welcome' + i + '.mp4';
+    var vid = document.querySelector('#welcome video')
+    vid.src = 'static/images/welcome' + i + '.mp4';
+    vid.addEventListener('click', function() {
+      i++;
+      if (i == 6) i = 1;
+      vid.src = 'static/images/welcome' + i + '.mp4';
+    });
   </script>
   <script src="static/js/build.min.js"></script>
 </body>
