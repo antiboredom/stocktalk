@@ -6,11 +6,12 @@
   <style>
     body {
       margin: 20px;
+      background-color: #222;
     }
     body,
     input,
     select {
-      font: 13px 'Helvetica Neue', sans-serif;
+      font: 13px'Helvetica Neue', sans-serif;
     }
     input.text {
       display: block;
@@ -22,6 +23,11 @@
       border: 1px solid #ccc;
       padding: 3px;
       background-color: #eee;
+      box-shadow: none;
+    }
+    input[type="text"] {
+      -webkit-appearance: none;
+      border-radius: 0;
     }
     input[type="submit"] {
       padding: 3px 7px;
@@ -43,6 +49,11 @@
     #wrap {
       max-width: 600px;
       margin: auto;
+      position: relative;
+      z-index: 1;
+      background-color: rgba(26, 26, 26, .8);
+      color: #fff;
+      padding: 20px;
     }
     #status {
       width: 100%;
@@ -51,17 +62,54 @@
     #out-img {
       width: 100%;
     }
+    #welcome {
+      overflow: hidden;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+    }
+    #welcome video {
+      height: 100%;
+      width: 177.77777778vh;
+      min-width: 100%;
+      min-height: 56.25vw;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    a {
+      color: #fff;
+    }
+    h1 {
+      margin: 0;
+    }
+    @media screen and (max-device-width: 700px) {
+      #wrap {
+        padding: 0;
+        background: none;
+      }
+      #welcome {
+        display: none;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div id="welcome">
+    <video src="static/images/welcome.mp4" autoplay="1" loop="1"></video>
+  </div>
+
   <div style="display:none">
     <img src="static/images/hold1.gif">
     <img src="static/images/hold2.gif">
   </div>
 
   <div id="wrap">
-    <h1>Genuine Human Interaction</h1>
+    <h1>Everyone dies alone</h1>
     <p>By <a href="http://lav.io" target="_blank">Sam Lavigne</a></p>
     <p>Write three lines to create a personalized video message.</p>
 
