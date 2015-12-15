@@ -96,7 +96,7 @@ var Stock = React.createClass({
         <form onSubmit={this.handleSubmit}>
           <div>{phrases}</div>
           {this.state.status ? '' :
-            <div>
+            <div id="submitter">
               <select defaultValue="gif" ref="filetype">
                 <option value="gif">GIF</option>
                 <option value="mp4">VIDEO</option>

@@ -11,7 +11,7 @@
     body,
     input,
     select {
-      font: 13px'Helvetica Neue', sans-serif;
+      font: 16px'Helvetica Neue', sans-serif;
     }
     input.text {
       display: block;
@@ -47,7 +47,7 @@
       overflow: auto;
     }
     #wrap {
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       position: relative;
       z-index: 1;
@@ -90,7 +90,15 @@
     #out-vid, #out-img {
       margin-bottom: 10px;
     }
+    #submitter {
+      margin: 20px 0px 10px 0px;
+    }
     @media screen and (max-device-width: 700px) {
+      body,
+      input,
+      select {
+        font: 13px'Helvetica Neue', sans-serif;
+      }
       #wrap {
         padding: 0;
         background: none;
@@ -113,16 +121,16 @@
   </div>
 
   <div id="wrap">
-    <h1>GREETINGS</h1>
+    <h1>Greetings</h1>
     <p>By <a href="http://lav.io" target="_blank">Sam Lavigne</a></p>
-    <p>Write three lines to create a personalized video message.</p>
+    <p>Write three lines to create a personalized video greeting.</p>
 
     <div id="container"></div>
   </div>
 
   <script>
-    var i = Math.ceil(Math.random()*5);
     var vid = document.querySelector('#welcome video')
+    var i = Math.ceil(Math.random()*5);
     vid.src = 'static/images/welcome' + i + '.mp4';
     vid.addEventListener('click', function() {
       i++;
